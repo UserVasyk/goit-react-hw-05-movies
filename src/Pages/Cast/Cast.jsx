@@ -4,15 +4,16 @@ import fetchMovie from '../../fetchMovieAPI';
 export const Cast = () => {
   const [cast, setCast] = useState([]);
   const { id } = useParams();
-  console.log(id);
+
   useEffect(() => {
     const fetchMovieById = async () => {
       const { data } = await fetchMovie.get(`movie/${id}/credits`);
-      console.log(data.cast);
+      console.log(data);
       return setCast(data.cast);
     };
     fetchMovieById();
   }, [id]);
+
   return (
     <ul>
       {cast.map(({ cast_id, profile_path, original_name }) => (

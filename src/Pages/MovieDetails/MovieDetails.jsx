@@ -31,8 +31,9 @@ export const MovieDetails = () => {
           praesentium ipsum quos unde voluptatum?
         </p>
       </div>
-      <Link to="reviews">Reviews</Link>
       <Link to="cast">Cast</Link>
+      <Link to="reviews">Reviews</Link>
+
       <Outlet />
     </main>
   );
