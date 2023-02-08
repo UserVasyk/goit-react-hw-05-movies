@@ -16,12 +16,19 @@ export const Cast = () => {
 
   return (
     <ul>
-      {cast.map(({ cast_id, profile_path, original_name }) => (
-        <li key={cast_id}>
-          <p>{original_name}</p>
-          <img src={profile_path} alt={original_name} />
-        </li>
-      ))}
+      {cast.map(({ cast_id, profile_path, name, character }) => {
+        if (profile_path === null) {
+          return;
+        }
+        const image = 'https://image.tmdb.org/t/p/original' + profile_path;
+        return (
+          <li key={cast_id}>
+            <p>{name}</p>
+            <p>Character: {character}</p>
+            <img width="200" src={image} alt={name} />
+          </li>
+        );
+      })}
     </ul>
   );
 };
