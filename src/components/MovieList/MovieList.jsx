@@ -1,16 +1,32 @@
-import { Link, useLocation } from 'react-router-dom';
-
-export const MovieList = ({ trendMovies }) => {
+import { useLocation } from 'react-router-dom';
+import defaultMoviePoster from '../../images/defaultMoviePoster.jpg';
+import {
+  MovieListStyled,
+  MovieItem,
+  Image,
+  LinkStyled,
+  NameBox,
+} from './MovieList.styled';
+export const MovieList = ({ movies }) => {
   const location = useLocation();
+  console.log(movies);
   return (
-    <ul>
-      {trendMovies.map(movie => (
-        <li key={movie.id}>
-          <Link to={`/movies/${movie.id}`} state={{ from: location }}>
-            {movie.original_title || movie.name}
-          </Link>
-        </li>
+    <MovieListStyled>
+      {movies.map(movie => (
+        <MovieItem key={movie.id}>
+          <LinkStyled to={`/movies/${movie.id}`} state={{ from: location }}>
+            <Image
+              alt={movie.name}
+              src={
+                movie.poster_path === null
+                  ? defaultMoviePoster
+                  : `https://image.tmdb.org/t/p/original${movie.poster_path}`
+              }
+            ></Image>
+            <NameBox>{movie.name || movie.original_title}</NameBox>
+          </LinkStyled>
+        </MovieItem>
       ))}
-    </ul>
+    </MovieListStyled>
   );
 };

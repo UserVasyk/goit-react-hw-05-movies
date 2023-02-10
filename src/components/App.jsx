@@ -3,8 +3,8 @@ import { SharedLayout } from './SharedLayout/SharedLayout';
 import { Home } from '../Pages/Home/Home';
 import { Movies } from '../Pages/Movies/Movies';
 import { MovieDetails } from '../Pages/MovieDetails/MovieDetails';
-import { Cast } from 'Pages/Cast/Cast';
-import { Reviews } from 'Pages/Reviews/Reviews';
+import { Cast } from 'components/Cast/Cast';
+import { Reviews } from 'components/Reviews/Reviews';
 
 export const App = () => {
   return (
@@ -17,6 +17,7 @@ export const App = () => {
           <Route path="reviews" element={<Reviews />} />
         </Route>
       </Route>
+      <Route path="*" element={<Home />} />
     </Routes>
   );
 };

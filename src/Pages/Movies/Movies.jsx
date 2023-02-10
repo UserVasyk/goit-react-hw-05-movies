@@ -1,25 +1,33 @@
 import { useState, useEffect } from 'react';
 import { MovieList } from 'components/MovieList/MovieList';
+import { useSearchParams } from 'react-router-dom';
+import { SearchBox } from 'components/SearchBox/SearchBox';
 import fetchMovie from '../../fetchMovieAPI';
-
 export const Movies = () => {
-  const [trendMovies, setTrendMovies] = useState([]);
+  const [searchMovies, setSearchMovies] = useState([]);
+  const [searchQuery, setSearchQuery] = useSearchParams();
+  const query = searchQuery.get('query') ?? '';
   useEffect(() => {
-    const fetchTrendMovies = async () => {
-      const { data } = await fetchMovie.get('trending/all/day');
+    if (query === '') {
+      return;
+    }
+    const fetchSearchMovies = async () => {
+      const { data } = await fetchMovie.get(
+        `/search/movie?&query=${query}&language=en-US&page=1&include_adult=false`
+      );
 
-      setTrendMovies(data.results);
+      return setSearchMovies(data.results);
     };
-    fetchTrendMovies();
-  }, []);
 
+    fetchSearchMovies();
+  }, [query]);
+  const onSubmit = query => {
+    setSearchQuery({ query });
+  };
   return (
-    <form>
-      <label>
-        <input />
-      </label>
-      <button type="submit">Search</button>
-      <MovieList trendMovies={trendMovies} />
-    </form>
+    <>
+      <SearchBox onSubmit={onSubmit} />
+      {searchMovies.length > 0 && <MovieList movies={searchMovies} />}
+    </>
   );
 };
