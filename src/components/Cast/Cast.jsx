@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import fetchMovie from '../../fetchMovieAPI';
-import defaultImage from '../../images/defaultImage.jpg';
+import { ListCast, ItemCast, PhotoCast, NamesBoxCast } from './Cast.styled';
 export const Cast = () => {
   const [cast, setCast] = useState([]);
   const { id } = useParams();
@@ -16,26 +16,24 @@ export const Cast = () => {
   }, [id]);
 
   return (
-    <ul>
-      {cast.map(({ cast_id, profile_path, name, character }, index) => {
-        let image = '';
-        if (index > 14) {
-          return;
+    <ListCast>
+      {cast.map(({ cast_id, profile_path, name, character }) => {
+        if (profile_path !== null) {
+          return (
+            <ItemCast key={cast_id}>
+              <PhotoCast
+                src={'https://image.tmdb.org/t/p/original' + profile_path}
+                alt={name}
+              />
+              <NamesBoxCast>
+                <p>Name: {name}</p>
+                <p>Character: {character}</p>
+              </NamesBoxCast>
+            </ItemCast>
+          );
         }
-        if (profile_path === null) {
-          image = defaultImage;
-        } else {
-          image = 'https://image.tmdb.org/t/p/original' + profile_path;
-        }
-
-        return (
-          <li key={cast_id}>
-            <p>{name}</p>
-            <p>Character: {character}</p>
-            <img width="200" src={image} alt={name} />
-          </li>
-        );
+        return null;
       })}
-    </ul>
+    </ListCast>
   );
 };

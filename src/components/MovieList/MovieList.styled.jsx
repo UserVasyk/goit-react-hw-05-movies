@@ -7,13 +7,10 @@ export const MovieListStyled = styled.ul`
   gap: 16px;
   margin: 0px auto;
   padding: 0px;
-  list-style: none;
-`;
-export const MovieItem = styled.li`
-  height: 450px;
+  margin-bottom: 30px;
 `;
 export const Image = styled.img`
-  height: 400px;
+  min-height: 480px;
 `;
 export const LinkStyled = styled(NavLink)`
   display: flex;
@@ -22,6 +19,7 @@ export const LinkStyled = styled(NavLink)`
   text-decoration: none;
 `;
 export const NameBox = styled.div`
+  border: solid 1px #000000;
   height: 100%;
   display: flex;
   align-items: center;
@@ -29,6 +27,7 @@ export const NameBox = styled.div`
   background-color: #e9e9e9;
   color: #000000;
   font-weight: 500;
+  padding: 20px 10px;
   box-shadow: rgb(0 0 0 / 20%) 0px 1px 3px 0px, rgb(0 0 0 / 14%) 0px 1px 1px 0px,
     rgb(0 0 0 / 12%) 0px 2px 1px -1px;
 `;

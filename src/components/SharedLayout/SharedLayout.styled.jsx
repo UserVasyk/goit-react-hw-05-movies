@@ -13,8 +13,14 @@ export const Navigation = styled.nav`
 `;
 export const NavLinkStyled = styled(NavLink)`
   font-size: 30px;
-  &.active {
-    color: orange;
+  transition: 250ms color;
+  text-decoration: none;
+  color: blue;
+  &.active,
+  :hover,
+  :focus {
+    color: #fdab14;
+    text-decoration: underline;
   }
 `;
 export const Header = styled.header`

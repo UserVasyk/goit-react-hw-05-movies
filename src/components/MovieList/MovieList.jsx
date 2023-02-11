@@ -2,7 +2,6 @@ import { useLocation } from 'react-router-dom';
 import defaultMoviePoster from '../../images/defaultMoviePoster.jpg';
 import {
   MovieListStyled,
-  MovieItem,
   Image,
   LinkStyled,
   NameBox,
@@ -13,7 +12,7 @@ export const MovieList = ({ movies }) => {
   return (
     <MovieListStyled>
       {movies.map(movie => (
-        <MovieItem key={movie.id}>
+        <li key={movie.id}>
           <LinkStyled to={`/movies/${movie.id}`} state={{ from: location }}>
             <Image
               alt={movie.name}
@@ -25,7 +24,7 @@ export const MovieList = ({ movies }) => {
             ></Image>
             <NameBox>{movie.name || movie.original_title}</NameBox>
           </LinkStyled>
-        </MovieItem>
+        </li>
       ))}
     </MovieListStyled>
   );

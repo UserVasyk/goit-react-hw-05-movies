@@ -1,7 +1,16 @@
-import { useParams, useLocation, Link, Outlet } from 'react-router-dom';
+import { useParams, useLocation, Outlet } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import fetchMovie from '../../fetchMovieAPI';
 import defaultMoviePoster from '../../images/defaultMoviePoster.jpg';
+import {
+  MovieDetailsContainer,
+  LinkStyled,
+  TitleLink,
+  ListLinks,
+  BackLinkStyled,
+  MovieInfo,
+  MovieDetailsBox,
+} from './MovieDetails.styled';
 export const MovieDetails = () => {
   const [movie, setMovie] = useState({});
   const { id } = useParams();
@@ -13,7 +22,7 @@ export const MovieDetails = () => {
       const { data } = await fetchMovie
         .get(`movie/${id}`)
         .catch(error => console.error(error));
-
+      console.log('data: ', data);
       return setMovie(data);
     };
     fetchMovieById();
@@ -28,40 +37,49 @@ export const MovieDetails = () => {
     genres,
   } = movie;
   return (
-    <main>
+    <MovieDetailsContainer>
       {Object.keys(movie).length > 0 ? (
         <>
-          <Link to={backLinkHref.current}>Back to movies</Link>
-          <img
-            height={400}
-            src={
-              poster_path === null
-                ? defaultMoviePoster
-                : `https://image.tmdb.org/t/p/original${poster_path}`
-            }
-            alt=""
-          />
-          <h2>{`${name || original_title} (${release_date.slice(0, 4)})`}</h2>
-          <p>User Score: {Math.ceil(vote_average * 10)}%</p>
-          <h3>Overview</h3>
-          <p>{overview}</p>
-          <h3>Genres</h3>
-          <ul>
-            {genres.map(({ id, name }) => (
-              <li key={id}>{name}</li>
-            ))}
-          </ul>
+          <BackLinkStyled to={backLinkHref.current}>
+            Back to movies
+          </BackLinkStyled>
+          <MovieDetailsBox>
+            <img
+              height={400}
+              src={
+                poster_path === null
+                  ? defaultMoviePoster
+                  : `https://image.tmdb.org/t/p/original${poster_path}`
+              }
+              alt=""
+            />
+            <MovieInfo>
+              <h2>{`${name || original_title} (${release_date.slice(
+                0,
+                4
+              )})`}</h2>
+              <p>User Score: {Math.ceil(vote_average * 10)}%</p>
+              <h3>Overview</h3>
+              <p>{overview}</p>
+              <h3>Genres</h3>
+              <ul>
+                {genres.map(({ id, name }) => (
+                  <li key={id}>{name}</li>
+                ))}
+              </ul>
+            </MovieInfo>
+          </MovieDetailsBox>
           <div>
-            <p>Additional Information</p>
-            <ul>
+            <TitleLink>Additional Information</TitleLink>
+            <ListLinks>
               <li>
                 {' '}
-                <Link to="cast">Cast</Link>
+                <LinkStyled to="cast">Cast</LinkStyled>
               </li>
               <li>
-                <Link to="reviews">Reviews</Link>
+                <LinkStyled to="reviews">Reviews</LinkStyled>
               </li>
-            </ul>
+            </ListLinks>
           </div>
 
           <Outlet />
@@ -69,6 +87,6 @@ export const MovieDetails = () => {
       ) : (
         <h2>Sorry but we didn't find this film</h2>
       )}
-    </main>
+    </MovieDetailsContainer>
   );
 };
