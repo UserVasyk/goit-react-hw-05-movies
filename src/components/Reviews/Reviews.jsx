@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import fetchMovie from '../../fetchMovieAPI';
 import { ListReviews, AuthorReview } from './Reviews.styled';
-export const Reviews = () => {
+const Reviews = () => {
   const [reviews, setReviews] = useState([]);
   const { id } = useParams();
 
@@ -16,19 +16,22 @@ export const Reviews = () => {
   }, [id]);
 
   return (
-    <ListReviews>
+    <>
       {reviews.length > 0 ? (
-        reviews.map(({ id, author, content }) => {
-          return (
-            <li key={id}>
-              <AuthorReview>Author: {author}</AuthorReview>
-              <p>{content}</p>
-            </li>
-          );
-        })
+        <ListReviews>
+          {reviews.map(({ id, author, content }) => {
+            return (
+              <li key={id}>
+                <AuthorReview>Author: {author}</AuthorReview>
+                <p>{content}</p>
+              </li>
+            );
+          })}
+        </ListReviews>
       ) : (
-        <p>There are no feedback</p>
+        <h3>We don't have any reviews for this movie.</h3>
       )}
-    </ListReviews>
+    </>
   );
 };
+export default Reviews;

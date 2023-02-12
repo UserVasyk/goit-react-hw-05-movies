@@ -1,4 +1,5 @@
 import { useParams, useLocation, Outlet } from 'react-router-dom';
+import { Suspense } from 'react';
 import { useEffect, useState, useRef } from 'react';
 import fetchMovie from '../../fetchMovieAPI';
 import defaultMoviePoster from '../../images/defaultMoviePoster.jpg';
@@ -11,7 +12,7 @@ import {
   MovieInfo,
   MovieDetailsBox,
 } from './MovieDetails.styled';
-export const MovieDetails = () => {
+const MovieDetails = () => {
   const [movie, setMovie] = useState({});
   const { id } = useParams();
   const location = useLocation();
@@ -22,7 +23,6 @@ export const MovieDetails = () => {
       const { data } = await fetchMovie
         .get(`movie/${id}`)
         .catch(error => console.error(error));
-      console.log('data: ', data);
       return setMovie(data);
     };
     fetchMovieById();
@@ -36,9 +36,10 @@ export const MovieDetails = () => {
     overview,
     genres,
   } = movie;
+
   return (
     <MovieDetailsContainer>
-      {Object.keys(movie).length > 0 ? (
+      {Object.keys(movie).length > 0 && (
         <>
           <BackLinkStyled to={backLinkHref.current}>
             Back to movies
@@ -81,12 +82,12 @@ export const MovieDetails = () => {
               </li>
             </ListLinks>
           </div>
-
-          <Outlet />
+          <Suspense fallback={<div>Loading page...</div>}>
+            <Outlet />
+          </Suspense>
         </>
-      ) : (
-        <h2>Sorry but we didn't find this film</h2>
       )}
     </MovieDetailsContainer>
   );
 };
+export default MovieDetails;

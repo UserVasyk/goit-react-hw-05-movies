@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { MovieList } from 'components/MovieList/MovieList';
 import { SearchBox } from 'components/SearchBox/SearchBox';
 import fetchMovie from '../../fetchMovieAPI';
-export const Movies = () => {
+const Movies = () => {
   const [searchMovies, setSearchMovies] = useState([]);
   const [searchQuery, setSearchQuery] = useSearchParams();
   const query = searchQuery.get('query') ?? '';
@@ -27,7 +27,12 @@ export const Movies = () => {
   return (
     <>
       <SearchBox onSubmit={onSubmit} />
-      {searchMovies.length > 0 && <MovieList movies={searchMovies} />}
+      {searchMovies.length > 0 ? (
+        <MovieList movies={searchMovies} />
+      ) : (
+        <h3 style={{ textAlign: 'center' }}>Type a movie with correct name.</h3>
+      )}
     </>
   );
 };
+export default Movies;

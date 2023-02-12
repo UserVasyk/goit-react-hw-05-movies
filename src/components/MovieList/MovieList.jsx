@@ -1,4 +1,5 @@
 import { useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import defaultMoviePoster from '../../images/defaultMoviePoster.jpg';
 import {
   MovieListStyled,
@@ -8,24 +9,26 @@ import {
 } from './MovieList.styled';
 export const MovieList = ({ movies }) => {
   const location = useLocation();
-  console.log(movies);
   return (
     <MovieListStyled>
-      {movies.map(movie => (
-        <li key={movie.id}>
-          <LinkStyled to={`/movies/${movie.id}`} state={{ from: location }}>
+      {movies.map(({ id, name, poster_path, original_title }) => (
+        <li key={id}>
+          <LinkStyled to={`/movies/${id}`} state={{ from: location }}>
             <Image
-              alt={movie.name}
+              alt={name}
               src={
-                movie.poster_path === null
+                poster_path === null
                   ? defaultMoviePoster
-                  : `https://image.tmdb.org/t/p/original${movie.poster_path}`
+                  : `https://image.tmdb.org/t/p/original${poster_path}`
               }
             ></Image>
-            <NameBox>{movie.name || movie.original_title}</NameBox>
+            <NameBox>{name || original_title}</NameBox>
           </LinkStyled>
         </li>
       ))}
     </MovieListStyled>
   );
+};
+MovieList.propTypes = {
+  movies: PropTypes.array.isRequired,
 };

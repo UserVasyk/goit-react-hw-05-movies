@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { MovieList } from 'components/MovieList/MovieList';
 import fetchMovie from '../../fetchMovieAPI';
 import { Title } from './Home.styled';
-export const Home = () => {
+const Home = () => {
   const [trendMovies, setTrendMovies] = useState([]);
   useEffect(() => {
     const fetchTrendMovies = async () => {
@@ -20,3 +20,4 @@ export const Home = () => {
     </main>
   );
 };
+export default Home;
